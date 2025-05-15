@@ -1,0 +1,237 @@
+{
+  "caregivers": [
+    {
+      "id": 1,
+      "fullName": "María López",
+      "email": "maria.lopez@example.com",
+      "phone": "987654322",
+      "document": "00000001",
+      "password": "maria123",
+      "profileImg": "https://randomuser.me/api/portraits/med/women/49.jpg",
+      "address": "Av. Los Pinos 123",
+      "district": "San Miguel"
+    }
+  ],
+  "tutors": [
+    {
+      "id": 1,
+      "fullName": "Juan Pérez",
+      "email": "juan.perez@example.com",
+      "phone": "987654321",
+      "document": "00000000",
+      "password": "juan123",
+      "profileImg": "https://randomuser.me/api/portraits/med/men/48.jpg",
+      "address": "Av. La Marina 123",
+      "district": "San Miguel"
+    }
+  ],
+  "services": [
+    {
+      "id": 1,
+      "caregiverId": 1,
+      "description": "Don't worry, I'll take care of your loved one with the utmost dedication and care. I understand the importance of providing a safe and nurturing environment, and I am committed to ensuring that your loved one feels comfortable and well-cared for at all times. My approach is centered on empathy, patience, and a genuine passion for caregiving. I strive to create a positive and supportive atmosphere where your loved one can thrive and feel valued. Thank you guys",
+      "schedules": [
+        {
+          "day": "mon",
+          "workHours": {
+            "startTime": "08:00",
+            "endTime": "16:00"
+          }
+        },
+        {
+          "day": "wed",
+          "workHours": {
+            "startTime": "08:00",
+            "endTime": "16:00"
+          }
+        },
+        {
+          "day": "fri",
+          "workHours": {
+            "startTime": "08:00",
+            "endTime": "12:00"
+          }
+        }
+      ],
+      "workaround": [
+        "San Miguel",
+        "Magdalena",
+        "Surquillo",
+        "San Isidro"
+      ],
+      "farePerHour": 3.32,
+      "rating": 4.5
+    }
+  ],
+  "reservations": [
+    {
+      "id": 1,
+      "tutorId": 1,
+      "caregiverId": 1,
+      "serviceId": 1,
+      "status": "completed",
+      "createdAt": "2021-12-01",
+      "schedule": {
+        "date": "2021-12-04",
+        "startTime": "08:00",
+        "endTime": "16:00"
+      },
+      "totalFare": 11.9
+    },
+    {
+      "tutorId": 1,
+      "caregiverId": 1,
+      "serviceId": 1,
+      "status": "pending",
+      "createdAt": "2024-10-13T16:11:34.436Z",
+      "schedule": {
+        "date": "2024-10-21T05:00:00.000Z",
+        "startTime": "08:00",
+        "endTime": "12:00"
+      },
+      "totalFare": 12.8,
+      "id": 2
+    },
+    {
+      "tutorId": 1,
+      "caregiverId": 1,
+      "serviceId": 1,
+      "status": "pending",
+      "createdAt": "2024-10-13T18:16:35.255Z",
+      "schedule": {
+        "date": "2024-10-14T05:00:00.000Z",
+        "startTime": "08:00",
+        "endTime": "16:00"
+      },
+      "totalFare": 25.6,
+      "id": 3
+    },
+    {
+      "tutorId": 1,
+      "caregiverId": 1,
+      "serviceId": 1,
+      "status": "pending",
+      "createdAt": "2024-10-13T18:21:46.346Z",
+      "schedule": {
+        "date": "2024-10-17T05:00:00.000Z",
+        "startTime": "08:00",
+        "endTime": "12:00"
+      },
+      "totalFare": 12.8,
+      "id": 4
+    },
+    {
+      "tutorId": 1,
+      "caregiverId": 1,
+      "serviceId": 1,
+      "status": "pending",
+      "createdAt": "2024-10-13T18:27:28.988Z",
+      "schedule": {
+        "date": "2024-10-18T05:00:00.000Z",
+        "startTime": "08:00",
+        "endTime": "12:00"
+      },
+      "totalFare": 12.8,
+      "id": 5
+    },
+    {
+      "tutorId": 1,
+      "caregiverId": 1,
+      "serviceId": 1,
+      "status": "pending",
+      "createdAt": "2024-10-13T18:28:26.340Z",
+      "schedule": {
+        "date": "2024-10-14T05:00:00.000Z",
+        "startTime": "08:00",
+        "endTime": "12:00"
+      },
+      "totalFare": 12.8,
+      "id": 6
+    },
+    {
+      "tutorId": 1,
+      "caregiverId": 1,
+      "serviceId": 1,
+      "status": "pending",
+      "createdAt": "2024-10-13T18:29:09.674Z",
+      "schedule": {
+        "date": "2024-10-14T05:00:00.000Z",
+        "startTime": "08:00",
+        "endTime": "17:00"
+      },
+      "totalFare": 28.8,
+      "id": 7
+    }
+  ],
+  "payments": [
+    {
+      "id": 1,
+      "tutorId": 1,
+      "caregiverId": 1,
+      "serviceId": 1,
+      "tutorPaymentMethodId": 4,
+      "caregiverPaymentMethodId": 3,
+      "tutorPaymentMethod": {
+        "cardNumber": "5555 1231 5555 5321",
+        "cardHolder": "JUAN PEREZ GONZALES ABARCÓN",
+        "cvv": "790",
+        "expirationDate": "11/24",
+        "userId": 1,
+        "id": 4
+      },
+      "caregiverPaymentMethod": {
+        "id": 3,
+        "userId": 2,
+        "cardNumber": "1234567890123456",
+        "expirationDate": "12/24",
+        "cvv": "123",
+        "cardHolder": "María López"
+      },
+      "totalAmount": 25.6,
+      "date": "2021-12-01"
+    },
+    {
+      "tutorId": 1,
+      "caregiverId": 1,
+      "serviceId": 1,
+      "totalAmount": 12.8,
+      "date": "2024-10-13T18:30:22.187Z",
+      "tutorPaymentMethodId": 4,
+      "tutorPaymentMethod": {
+        "cardNumber": "5555 1231 5555 5325",
+        "cardHolder": "JUAN PEREZ GONZALES ABARCÓN",
+        "cvv": "790",
+        "expirationDate": "11/24",
+        "tutorId": 1,
+        "id": 4
+      },
+      "id": 2
+    }
+  ],
+  "user-payment-methods": [
+    {
+      "id": 3,
+      "caregiverId": 1,
+      "cardNumber": "1234567890123456",
+      "expirationDate": "12/24",
+      "cvv": "123",
+      "cardHolder": "María López"
+    },
+    {
+      "cardNumber": "5555 1231 5555 5325",
+      "cardHolder": "JUAN PEREZ GONZALES ABARCÓN",
+      "cvv": "790",
+      "expirationDate": "11/24",
+      "tutorId": 1,
+      "id": 4
+    },
+    {
+      "cardHolder": "JUAN PEREZ DEL TRABAJO",
+      "cardNumber": "8888 8888 8888 8888",
+      "cvv": "790",
+      "expirationDate": "12/23",
+      "tutorId": 1,
+      "id": 5
+    }
+  ]
+}
