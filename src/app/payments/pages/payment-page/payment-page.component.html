@@ -1,0 +1,31 @@
+<div class="payment-methods-container">
+  <h1>Your payment methods</h1>
+  <p>
+    In this section, you manage your payment wallet by registering your cards
+    and setting up preferred payment methods for a seamless checkout experience.
+  </p>
+
+  <div class="action-buttons">
+    <button
+      mat-flat-button
+      color="primary"
+      class="btn btn--add-card"
+      (click)="addEditCard()"
+    >
+      <mat-icon>add</mat-icon> Add a card
+    </button>
+    <button mat-stroked-button class="btn btn--history" routerLink="./history">
+      <mat-icon>history</mat-icon>
+      History
+    </button>
+  </div>
+
+  <div class="card-list">
+    <app-payment-card
+      *ngFor="let card of cards"
+      [card]="card"
+      (onDelete)="removeCard(card)"
+      (onEdit)="addEditCard(card)"
+    ></app-payment-card>
+  </div>
+</div>

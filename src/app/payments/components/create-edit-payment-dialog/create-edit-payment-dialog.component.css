@@ -1,0 +1,28 @@
+.dialog-title {
+  text-align: center;
+}
+
+.card-form {
+  padding-top: 8px;
+}
+
+.form-field--full {
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.btn {
+  border-radius: 5px;
+}
+
+.btn--secondary {
+  color: #156683 !important;
+}
+
+.btn--primary {
+  background: #156683 !important;
+}

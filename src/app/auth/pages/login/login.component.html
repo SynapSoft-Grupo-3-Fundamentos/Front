@@ -1,0 +1,60 @@
+<section class="main-section">
+  <div class="card">
+    <h2 class="card-title">Welcome!</h2>
+    <form [formGroup]="userForm" class="form-container" (ngSubmit)="login()">
+      <div class="form-field">
+        <label class="form-field__label">Email</label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="email" />
+        </mat-form-field>
+      </div>
+
+      <div class="form-field">
+        <label class="form-field__label">Password</label>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="toggleShowPassword($event)"
+            type="button"
+          >
+            <mat-icon>{{
+              showPassword ? "visibility" : "visibility_off"
+            }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <span class="form-field__link"
+        >Don’t have an account?
+        <a routerLink="/sign-up">Create a new one</a></span
+      >
+
+      <div class="form-btn-wrapper">
+        <button mat-flat-button class="primary-btn">Enter</button>
+      </div>
+
+      <div class="form-btn-wrapper">
+        <button
+          mat-flat-button
+          class="primary-btn"
+          (click)="loginAsTutorDemoBtn()"
+        >
+          Login as Tutor
+        </button>
+        <button
+          mat-flat-button
+          class="primary-btn"
+          (click)="loginAsCaregiverDemoBtn()"
+        >
+          Login as Caregiver
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

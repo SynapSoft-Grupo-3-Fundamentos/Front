@@ -1,0 +1,87 @@
+.main-section {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(115.81deg, #113148 -9.09%, #2e658c 60.79%);
+  padding: 20px;
+}
+
+.card {
+  width: 100%;
+  max-width: 512px;
+  padding: 24px 32px 48px;
+  background: #fff;
+  border-radius: 10px;
+}
+.card-title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.form-container {
+  margin-top: 24px;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-field__label {
+  margin-bottom: 4px;
+  padding-left: 2px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-field ::ng-deep .mat-mdc-form-field-infix {
+  padding: 0;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  width: 100%;
+}
+
+.form-field__link {
+  font-size: 13px;
+  text-align: center;
+  display: block;
+  margin-top: 12px;
+}
+
+.form-field__link a {
+  color: #da373d;
+}
+
+.form-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+.primary-btn {
+  background: #0d3a5a !important;
+  max-width: 160px;
+  width: 100%;
+  border-radius: 5px;
+}
+
+:host input {
+  min-width: 0;
+}
+
+:host input[type="password"]::-ms-reveal,
+:host input[type="password"]::-ms-clear {
+  display: none;
+}

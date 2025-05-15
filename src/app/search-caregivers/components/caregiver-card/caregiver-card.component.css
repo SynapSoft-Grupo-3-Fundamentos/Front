@@ -1,0 +1,73 @@
+:host ::ng-deep .mat-mdc-card {
+  overflow: hidden;
+  background: #f6fafe;
+  border-color: #c0c8cd;
+}
+:host ::ng-deep .mat-mdc-card-header {
+  padding: 0;
+  overflow: hidden;
+}
+
+:host ::ng-deep .mat-mdc-card-actions {
+  padding: 16px;
+}
+
+.caregiver-img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.caregiver-info {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.caregiver-name {
+  margin-top: 16px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #171c1f;
+}
+.caregiver-address {
+  font-family: "Open Sans", sans-serif;
+  color: #40484c;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.caregiver-rating {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.caregiver-rating ::ng-deep .mat-icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  color: #da373d;
+}
+
+.caregiver-biography {
+  font-size: 14px;
+  margin-top: 8px;
+  color: #40484c;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.btn-see-more {
+  margin: 8px 0 0 auto;
+  background: #156683 !important;
+  border-radius: 5px;
+}

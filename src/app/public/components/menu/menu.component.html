@@ -1,0 +1,33 @@
+<app-profile [user]="user"></app-profile>
+
+<mat-list role="list">
+  @for (item of filteredMenuList; track $index) {
+    <mat-list-item class="nav-menu-item">
+      <a
+        class="nav-menu-item__link"
+        [routerLink]="item.link"
+        routerLinkActive="active"
+      >
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span>
+        {{ item.name }}
+      </span>
+      </a>
+    </mat-list-item>
+  }
+</mat-list>
+
+<mat-list role="list" style="margin-top: auto">
+  <mat-list-item class="nav-menu-item">
+    <a class="nav-menu-item__link" routerLink="/settings">
+      <mat-icon>settings</mat-icon>
+      <span>Settings</span>
+    </a>
+  </mat-list-item>
+  <mat-list-item class="nav-menu-item">
+    <a class="nav-menu-item__link" (click)="logout($event)" routerLink="/login">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </a>
+  </mat-list-item>
+</mat-list>
