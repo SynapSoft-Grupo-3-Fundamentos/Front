@@ -46,6 +46,18 @@ export class MenuComponent implements OnInit {
       icon: 'book-open-blank-variant-outline',
       role: 'caregiver',
     },
+    {
+      name: 'Reviews',
+      link: '/review',
+      icon: 'stars',
+      role: 'all',
+    },
+    {
+      name: 'Support',
+      link: '/support',
+      icon: 'list_alt',
+      role: 'all',
+    },
   ];
 
   filteredMenuList: typeof this.menuList = [];

@@ -8,6 +8,7 @@ import { PaymentPageComponent } from './payments/pages/payment-page/payment-page
 import { ReservationListComponent } from './reservations/pages/reservation-list/reservation-list.component';
 import { ServiceDetailComponent } from './search-caregivers/pages/service-detail/service-detail.component';
 import { PaymentHistoryComponent } from './payments/pages/payment-history/payment-history.component';
+import {ReviewPageComponent} from "./reviews/pages/review-page/review-page.component";
 
 export const routes: Routes = [
   {
@@ -36,6 +37,7 @@ export const routes: Routes = [
       { path: 'search-caregiver/:id', component: ServiceDetailComponent },
       { path: 'your-service', component: ServiceDetailComponent },
       { path: 'reservations', component: ReservationListComponent },
+      { path: 'review', component: ReviewPageComponent },
     ],
   },
 ];
