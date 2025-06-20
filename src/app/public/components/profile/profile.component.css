@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+}
+
+.profile-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-name {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.profile-role {
+  font-size: 14px;
+  text-transform: capitalize;
+}

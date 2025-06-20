@@ -1,0 +1,33 @@
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+.full-width {
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.half-width {
+  flex: 1;
+}
+
+.submit-button {
+  align-self: center;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+  .half-width {
+    width: 100%;
+  }
+}

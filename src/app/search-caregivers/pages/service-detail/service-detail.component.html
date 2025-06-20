@@ -1,0 +1,295 @@
+<section>
+  <header class="section-header">
+    <h1 class="header-title">
+      @if (canEdit) { Your offer description } @else { Detail of
+        {{ serviceSearch?.completeName }}’s caregiver service }
+    </h1>
+
+    @if (!canEdit) {
+      <a class="go-back-btn" routerLink="../">
+        <mat-icon>arrow_back</mat-icon>
+        <span>Go back</span>
+      </a>
+    }
+  </header>
+
+  <div class="caregiver-section">
+    <mat-card class="caregiver-preview-card">
+      <mat-card-header>
+        <img
+          class="caregiver-img"
+          [src]="serviceSearch?.profileImage"
+          [alt]="serviceSearch?.completeName"
+        />
+      </mat-card-header>
+      <mat-card-content>
+        <p class="caregiver-card-name">
+          {{ serviceSearch?.completeName }}
+        </p>
+
+        <div class="caregiver-card-list">
+          <div class="caregiver-card-item">
+            <mat-icon>person</mat-icon>
+            <span>{{ serviceSearch?.age }} years old</span>
+          </div>
+
+          <div class="caregiver-card-item">
+            <mat-icon>place</mat-icon>
+            <span
+            >{{ serviceSearch?.address }}</span
+            >
+          </div>
+
+          <div class="caregiver-card-item">
+            <mat-icon>schedule</mat-icon>
+            <span>{{ serviceSearch?.caregiverExperience }} years in SafeChild</span>
+          </div>
+
+          <div class="caregiver-card-item">
+            <mat-icon>work</mat-icon>
+            <span>{{ serviceSearch?.completedServices }} services realized</span>
+          </div>
+        </div>
+      </mat-card-content>
+      @if (!canEdit) {
+        <mat-card-actions>
+          <button mat-flat-button class="btn btn-primary" (click)="openDialog()">
+            <mat-icon>book</mat-icon>
+            <span>Reservate</span>
+          </button>
+        </mat-card-actions>
+      }
+    </mat-card>
+
+    <div style="display: flex; flex-direction: column; gap: 16px; width: 100%">
+      <mat-card>
+        <mat-card-header style="position: relative">
+          <mat-card-title>Biography</mat-card-title>
+          <mat-card-subtitle
+          >See more about
+            {{ serviceSearch?.completeName }}</mat-card-subtitle
+          >
+          @if (canEdit && !biographyEditMode) {
+            <button
+              mat-fab
+              aria-label="Edit biography"
+              (click)="biographyEditMode = true"
+              style="position: absolute; top: 10px; right: 16px"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          }
+        </mat-card-header>
+        <mat-card-content>
+          @if(!biographyEditMode){
+            {{ serviceSearch?.biography }}
+          } @else {
+            <form [formGroup]="biographyForm" (submit)="updateDescription()">
+              <mat-form-field appearance="outline" style="width: 100%">
+                <mat-label>Leave a comment</mat-label>
+                <textarea
+                  matInput
+                  formControlName="description"
+                  placeholder="Ex. It makes me feel..."
+                  rows="6"
+                ></textarea>
+              </mat-form-field>
+
+              <button
+                mat-stroked-button
+                class="btn"
+                type="submit"
+                (click)="cancelEditBiographyMode($event)"
+              >
+                <mat-icon>close</mat-icon>
+                <span>Cancel</span>
+              </button>
+
+              <button mat-flat-button class="btn btn-primary">
+                <mat-icon>edit</mat-icon>
+                <span>Update</span>
+              </button>
+            </form>
+          }
+        </mat-card-content>
+      </mat-card>
+
+      <div style="display: flex; gap: 16px">
+        <mat-card style="flex-grow: 1; width: 100%">
+          <mat-card-header style="position: relative">
+            <mat-card-title>Schedule</mat-card-title>
+            <mat-card-subtitle>See your options</mat-card-subtitle>
+            @if (canEdit && !scheduleEditMode) {
+              <button
+                mat-fab
+                aria-label="Edit biography"
+                (click)="editSchedule()"
+                style="position: absolute; top: 10px; right: 16px"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+            }
+          </mat-card-header>
+          <mat-card-content>
+            @if(scheduleEditMode){
+              <button
+                mat-flat-button
+                class="btn btn-primary"
+                (click)="openAddOrEditScheduleDialog()"
+              >
+                <mat-icon>add</mat-icon>
+                <span>Add</span>
+              </button>
+
+              <button
+                mat-stroked-button
+                class="btn"
+                type="submit"
+                (click)="cancelEditSchedule()"
+              >
+                <mat-icon>close</mat-icon>
+                <span>Cancel</span>
+              </button>
+
+            }
+
+            <table mat-table [dataSource]="serviceSearch?.schedules ?? []">
+              <ng-container matColumnDef="weekDay">
+                <th mat-header-cell *matHeaderCellDef>Days</th>
+                <td mat-cell *matCellDef="let element">{{ element.weekDay }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="startHour">
+                <th mat-header-cell *matHeaderCellDef>Start hour</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.startHour }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="endHour">
+                <th mat-header-cell *matHeaderCellDef>End hour</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.endHour }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button (click)="deleteSchedule(element)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    (click)="openAddOrEditScheduleDialog(element)"
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr
+                mat-header-row
+                *matHeaderRowDef="displayedScheduleColumns"
+              ></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: displayedScheduleColumns"
+              ></tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+        <mat-card style="flex-grow: 1; width: 100%">
+          <mat-card-header style="position: relative">
+            <mat-card-title>Places & Fare</mat-card-title>
+            <mat-card-subtitle>See more options</mat-card-subtitle>
+            @if (canEdit && !placesAndFareEditMode) {
+              <button
+                mat-fab
+                aria-label="Edit places & fare"
+                (click)="placesAndFareEditMode = true"
+                style="position: absolute; top: 10px; right: 16px"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+            }
+          </mat-card-header>
+          <mat-card-content>
+            @if (!placesAndFareEditMode) {
+              <mat-chip-set>
+                @for (place of places; track $index) {
+                  <mat-chip>{{ place }}</mat-chip>
+                }
+              </mat-chip-set>
+
+              <p style="font-weight: 600">Fare per hour:</p>
+              <p>S/ {{ farePerHour.toFixed(2) }}</p>
+            } @else {
+              <form
+                [formGroup]="placesAndFareForm"
+                (submit)="updatePlacesAndFare($event)"
+              >
+                <div>
+                  <mat-form-field appearance="outline" style="width: 100%">
+                    <mat-label>Workarounds</mat-label>
+                    <mat-chip-grid #chipGrid aria-label="Enter a place">
+                      @for (place of placesAndFareForm.value.places; track $index)
+                      {
+                        <mat-chip-row
+                          (removed)="removePlace(place)"
+                          [editable]="true"
+                          (edited)="editPlace(place, $event)"
+                          [aria-description]="'press enter to edit ' + place"
+                        >
+                          {{ place }}
+                          <button matChipRemove>
+                            <mat-icon>cancel</mat-icon>
+                          </button>
+                        </mat-chip-row>
+                      }
+                      <input
+                        placeholder="New place..."
+                        [matChipInputFor]="chipGrid"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        [matChipInputAddOnBlur]="true"
+                        (matChipInputTokenEnd)="addPlace($event)"
+                        required
+                      />
+                    </mat-chip-grid>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field appearance="outline" style="width: 100%">
+                    <mat-label>Fare per Hour</mat-label>
+                    <input
+                      matInput
+                      formControlName="farePerHour"
+                      placeholder="3.20"
+                      required
+                    />
+                  </mat-form-field>
+                </div>
+
+                <button
+                  mat-stroked-button
+                  class="btn"
+                  type="submit"
+                  (click)="cancelEditPlacesAndFare($event)"
+                >
+                  <mat-icon>close</mat-icon>
+                  <span>Cancel</span>
+                </button>
+
+                <button mat-flat-button class="btn btn-primary">
+                  <mat-icon>edit</mat-icon>
+                  <span>Update</span>
+                </button>
+              </form>
+
+            }
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</section>

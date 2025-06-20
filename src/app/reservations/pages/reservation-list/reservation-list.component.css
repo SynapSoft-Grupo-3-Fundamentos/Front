@@ -1,0 +1,12 @@
+.header-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #0d3a5a;
+}
+
+.reservation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}

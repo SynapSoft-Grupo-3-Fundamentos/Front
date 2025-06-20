@@ -1,0 +1,74 @@
+<h2 mat-dialog-title>Reserve your service</h2>
+<mat-dialog-content>
+  <mat-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="firstFormGroup" label="Select a schedule">
+      <form [formGroup]="firstFormGroup">
+        <mat-form-field
+          appearance="outline"
+          style="margin-top: 8px; width: 100%"
+        >
+          <mat-label>Choose a date</mat-label>
+          <input
+            matInput
+            formControlName="date"
+            [matDatepicker]="picker"
+            [matDatepickerFilter]="filterDates"
+            required
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <div style="display: flex; gap: 12px; margin-top: 8px">
+          <mat-form-field appearance="outline" style="width: 100%">
+            <mat-label>Start Time</mat-label>
+            <input
+              matInput
+              formControlName="startTime"
+              placeholder="08:00"
+              required
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 100%">
+            <mat-label>End Time</mat-label>
+            <input
+              matInput
+              formControlName="endTime"
+              placeholder="18:00"
+              required
+            />
+          </mat-form-field>
+        </div>
+        <mat-dialog-actions align="end">
+          <button mat-button matStepperNext>Next</button>
+        </mat-dialog-actions>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup" label="Select a payment">
+      <form [formGroup]="secondFormGroup">
+        <mat-selection-list formControlName="paymentOption" [multiple]="false">
+          @for (card of cardList; track $index) {
+            <mat-list-option [value]="card">
+            <span matListItemTitle style="text-transform: uppercase">{{
+                card.holder
+              }}</span>
+              <span matListItemLine
+              >**** **** **** {{ card.number?.toString()?.slice(-4) }}</span
+              >
+            </mat-list-option>
+          }
+        </mat-selection-list>
+        <mat-dialog-actions align="end">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="createReservation()">Done</button>
+        </mat-dialog-actions>
+      </form>
+    </mat-step>
+  </mat-stepper>
+</mat-dialog-content>

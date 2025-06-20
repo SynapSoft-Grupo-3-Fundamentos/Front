@@ -1,0 +1,78 @@
+.payment-methods-container {
+  padding: 20px;
+}
+
+.payment-methods-container h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.payment-methods-container p {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+button[mat-raised-button] {
+  margin-bottom: 20px;
+}
+
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(328px, 1fr));
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.payment-card {
+  width: 300px;
+  position: relative;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+mat-card-content {
+  font-size: 14px;
+  color: #333;
+}
+
+button[mat-icon-button] {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.payment-card mat-card-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.payment-card mat-card-subtitle {
+  font-size: 14px;
+  color: #888;
+}
+
+.btn {
+  border-radius: 5px;
+}
+
+.btn--add-card {
+  background-color: #156683 !important;
+  color: white;
+}
+
+.btn--history {
+  color: #156683 !important;
+  border-color: #156683 !important;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}

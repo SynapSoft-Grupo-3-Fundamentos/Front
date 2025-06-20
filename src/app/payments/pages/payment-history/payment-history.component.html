@@ -1,0 +1,51 @@
+<h1 class="header-title">Your payment history</h1>
+
+<button mat-button routerLink="../">Go back</button>
+
+<table mat-table [dataSource]="paymentListData">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>No.</th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef>Created at</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.createdAt | date: 'dd/MM/yyyy' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="amount">
+    <th mat-header-cell *matHeaderCellDef>Amount</th>
+    <td mat-cell *matCellDef="let element">
+      S/ {{ element.reservation.totalAmount?.toFixed(2) }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="subject">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ this.user.role === "tutor" ? "Caregiver" : "Tutor" }}'s name
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{
+        this.user.role === "tutor"
+          ? element.reservation.caregiver.completeName.completeName
+          : element.reservation.tutorId
+      }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="last-digits">
+    <th mat-header-cell *matHeaderCellDef>Card number</th>
+    <td mat-cell *matCellDef="let element">
+      {{
+        this.user.role === "tutor"
+          ? element.card.cardNumber
+          : element.card.cardNumber
+      }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
