@@ -9,6 +9,7 @@ import { ReservationListComponent } from './reservations/pages/reservation-list/
 import { ServiceDetailComponent } from './search-caregivers/pages/service-detail/service-detail.component';
 import { PaymentHistoryComponent } from './payments/pages/payment-history/payment-history.component';
 import {ReviewPageComponent} from "./reviews/pages/review-page/review-page.component";
+import {SupportPageComponent} from "./support/pages/support-page/support-page.component";
 
 export const routes: Routes = [
   {
@@ -38,6 +39,7 @@ export const routes: Routes = [
       { path: 'your-service', component: ServiceDetailComponent },
       { path: 'reservations', component: ReservationListComponent },
       { path: 'review', component: ReviewPageComponent },
+      { path: 'support', component: SupportPageComponent },
     ],
   },
 ];
