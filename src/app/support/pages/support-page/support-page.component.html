@@ -3,25 +3,46 @@
     <h1>Support</h1>
     <p class="message">Por favor, completa el formulario a continuación para solicitar ayuda.</p>
 
-    <form id="supportForm">
+    <form #supportForm="ngForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="name">Nombre:</label>
-        <input type="text" id="name" name="name" required>
+        <input id="name" name="name" required [(ngModel)]="formModel.name" />
       </div>
       <div class="form-group">
         <label for="email">Correo Electrónico:</label>
-        <input type="email" id="email" name="email" required>
+        <input id="email" name="mail" type="email" required [(ngModel)]="formModel.mail" />
       </div>
       <div class="form-group">
         <label for="description">Descripción del Problema:</label>
-        <textarea id="description" name="description" required></textarea>
+        <textarea id="description" name="description" required [(ngModel)]="formModel.description"></textarea>
       </div>
+
+      <button mat-raised-button type="submit" [disabled]="supportForm.invalid || postingTicket">
+        <span *ngIf="!postingTicket">Generar Ticket</span>
+        <mat-progress-spinner *ngIf="postingTicket" mode="indeterminate" diameter="20"></mat-progress-spinner>
+      </button>
     </form>
 
-    <p class="message">¿Necesitas generar un ticket? Haz clic en el botón a continuación.</p>
-    <button class="mat-raised-button" onclick="window.location.href='https://example.com/tickets'">
-      Generar Ticket
-    </button>
+    <div class="actions">
+      <button mat-stroked-button (click)="onLoadTickets()" [disabled]="loadingTickets">
+        <span *ngIf="!loadingTickets">Ver Tickets</span>
+        <mat-progress-spinner *ngIf="loadingTickets" mode="indeterminate" diameter="20"></mat-progress-spinner>
+      </button>
+      <button *ngIf="showTickets" mat-icon-button aria-label="Refrescar tickets" (click)="onLoadTickets()">
+        🔄
+      </button>
+    </div>
+
+    <div *ngIf="showTickets" class="tickets-list">
+      <h2>Tickets Existentes</h2>
+      <div *ngFor="let ticket of tickets" class="ticket-card">
+        <p><strong>ID:</strong> {{ ticket.id }}</p>
+        <p><strong>Nombre:</strong> {{ ticket.name }}</p>
+        <p><strong>Email:</strong> {{ ticket.mail }}</p>
+        <p><strong>Descripción:</strong> {{ ticket.description }}</p>
+        <p><strong>Estado:</strong> {{ ticket.ticketStatus }}</p>
+        <hr />
+      </div>
+    </div>
   </div>
 </div>
-
