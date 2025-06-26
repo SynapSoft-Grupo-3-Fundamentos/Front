@@ -19,19 +19,18 @@ import { Schedule } from '../../model/service-search';
 import { ServiceSearchService } from '../../services/service-search.service';
 
 @Component({
-  selector: 'app-create-edit-schedule',
-  standalone: true,
-  imports: [
-    MatDialogModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
-    FormsModule,
-  ],
-  templateUrl: './create-edit-schedule.component.html',
-  styleUrl: './create-edit-schedule.component.css',
+    selector: 'app-create-edit-schedule',
+    imports: [
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatButtonModule,
+        FormsModule,
+    ],
+    templateUrl: './create-edit-schedule.component.html',
+    styleUrl: './create-edit-schedule.component.css'
 })
 export class CreateEditScheduleComponent {
   public editMode = false;

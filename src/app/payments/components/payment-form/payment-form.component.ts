@@ -9,19 +9,18 @@ import { CommonModule } from '@angular/common';
 import { Card } from '../../model/card.entity';
 
 @Component({
-  selector: 'app-payment-form',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCheckboxModule,
-  ],
-  templateUrl: './payment-form.component.html',
-  styleUrl: './payment-form.component.css',
+    selector: 'app-payment-form',
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatCheckboxModule,
+    ],
+    templateUrl: './payment-form.component.html',
+    styleUrl: './payment-form.component.css'
 })
 export class PaymentFormComponent {
   newCard: Card = new Card();

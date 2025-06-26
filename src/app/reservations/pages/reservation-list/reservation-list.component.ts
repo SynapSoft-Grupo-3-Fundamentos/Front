@@ -8,11 +8,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { UserService } from '../../../shared/services/user.service';
 
 @Component({
-  selector: 'app-reservation-list',
-  standalone: true,
-  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule],
-  templateUrl: './reservation-list.component.html',
-  styleUrl: './reservation-list.component.css',
+    selector: 'app-reservation-list',
+    imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule],
+    templateUrl: './reservation-list.component.html',
+    styleUrl: './reservation-list.component.css'
 })
 export class ReservationListComponent implements OnInit {
   reservationList: any[] = [];

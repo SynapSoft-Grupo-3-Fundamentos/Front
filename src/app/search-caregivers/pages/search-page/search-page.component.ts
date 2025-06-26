@@ -12,20 +12,19 @@ import { ServiceSearch } from '../../model/service-search';
 import { ServiceSearchService } from '../../services/service-search.service';
 
 @Component({
-  selector: 'app-search-page',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatSelectModule,
-    MatFormField,
-    MatButtonModule,
-    MatIconModule,
-    MatGridListModule,
-    CaregiverCardComponent,
-    FormsModule,
-  ],
-  templateUrl: './search-page.component.html',
-  styleUrl: './search-page.component.css',
+    selector: 'app-search-page',
+    imports: [
+        CommonModule,
+        MatSelectModule,
+        MatFormField,
+        MatButtonModule,
+        MatIconModule,
+        MatGridListModule,
+        CaregiverCardComponent,
+        FormsModule,
+    ],
+    templateUrl: './search-page.component.html',
+    styleUrl: './search-page.component.css'
 })
 export class SearchPageComponent implements OnInit, OnChanges {
   searchServiceList: ServiceSearch[] = [];

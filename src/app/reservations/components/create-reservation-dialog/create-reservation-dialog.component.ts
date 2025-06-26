@@ -40,22 +40,21 @@ const dayLabels = {
 };
 
 @Component({
-  selector: 'app-create-reservation-dialog',
-  standalone: true,
-  providers: [provideNativeDateAdapter()],
-  imports: [
-    MatDialogModule,
-    MatDatepickerModule,
-    MatStepperModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormField,
-    MatButtonModule,
-    MatInputModule,
-    MatListModule,
-  ],
-  templateUrl: './create-reservation-dialog.component.html',
-  styleUrl: './create-reservation-dialog.component.css',
+    selector: 'app-create-reservation-dialog',
+    providers: [provideNativeDateAdapter()],
+    imports: [
+        MatDialogModule,
+        MatDatepickerModule,
+        MatStepperModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormField,
+        MatButtonModule,
+        MatInputModule,
+        MatListModule,
+    ],
+    templateUrl: './create-reservation-dialog.component.html',
+    styleUrl: './create-reservation-dialog.component.css'
 })
 export class CreateReservationDialogComponent implements OnInit {
   firstFormGroup: FormGroup;

@@ -30,22 +30,21 @@ import { CreateEditScheduleComponent } from '../../components/create-edit-schedu
 import { empty } from 'rxjs';
 
 @Component({
-  selector: 'app-service-detail',
-  standalone: true,
-  imports: [
-    RouterLink,
-    MatIconModule,
-    MatCardModule,
-    MatButtonModule,
-    MatTableModule,
-    MatChipsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-  templateUrl: './service-detail.component.html',
-  styleUrl: './service-detail.component.css',
+    selector: 'app-service-detail',
+    imports: [
+        RouterLink,
+        MatIconModule,
+        MatCardModule,
+        MatButtonModule,
+        MatTableModule,
+        MatChipsModule,
+        MatInputModule,
+        MatFormFieldModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
+    templateUrl: './service-detail.component.html',
+    styleUrl: './service-detail.component.css'
 })
 export class ServiceDetailComponent implements OnInit {
   public serviceSearchId?: number;

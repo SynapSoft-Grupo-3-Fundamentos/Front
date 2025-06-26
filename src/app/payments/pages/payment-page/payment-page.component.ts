@@ -14,18 +14,17 @@ import { DeletePaymentDialogComponent } from '../../components/delete-payment-di
 import { PaymentCardComponent } from '../../components/payment-card/payment-card.component';
 
 @Component({
-  selector: 'app-payment-page',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIcon,
-    PaymentCardComponent,
-    RouterLink,
-  ],
-  templateUrl: './payment-page.component.html',
-  styleUrl: './payment-page.component.css',
+    selector: 'app-payment-page',
+    imports: [
+        CommonModule,
+        MatCardModule,
+        MatButtonModule,
+        MatIcon,
+        PaymentCardComponent,
+        RouterLink,
+    ],
+    templateUrl: './payment-page.component.html',
+    styleUrl: './payment-page.component.css'
 })
 export class PaymentPageComponent implements OnInit {
   cards: Card[] = [];

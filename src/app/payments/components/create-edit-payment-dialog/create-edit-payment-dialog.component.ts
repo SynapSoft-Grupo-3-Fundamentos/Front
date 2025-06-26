@@ -18,18 +18,17 @@ import { PaymentMethodsService } from '../../services/payment-methods.service';
 import { Card } from '../../model/card.entity';
 
 @Component({
-  selector: 'app-create-edit-payment-dialog',
-  standalone: true,
-  imports: [
-    MatDialogModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    FormsModule,
-  ],
-  templateUrl: './create-edit-payment-dialog.component.html',
-  styleUrl: './create-edit-payment-dialog.component.css',
+    selector: 'app-create-edit-payment-dialog',
+    imports: [
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        FormsModule,
+    ],
+    templateUrl: './create-edit-payment-dialog.component.html',
+    styleUrl: './create-edit-payment-dialog.component.css'
 })
 export class CreateEditPaymentDialogComponent {
   public editMode: boolean;

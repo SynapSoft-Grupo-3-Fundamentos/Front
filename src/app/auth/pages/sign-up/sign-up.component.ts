@@ -17,21 +17,20 @@ import {User} from "../../model/User";
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-sign-up',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatIconModule,
-    RouterLink,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-  templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-sign-up',
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatIconModule,
+        RouterLink,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
+    templateUrl: './sign-up.component.html',
+    styleUrl: './sign-up.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignUpComponent {
   userForm = new FormGroup({

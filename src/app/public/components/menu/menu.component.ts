@@ -6,17 +6,16 @@ import { User } from '../../../auth/model/User';
 import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
-  selector: 'app-menu',
-  standalone: true,
-  imports: [
-    RouterLink,
-    RouterLinkActive,
-    MatListModule,
-    MatIconModule,
-    ProfileComponent,
-  ],
-  templateUrl: './menu.component.html',
-  styleUrl: './menu.component.css',
+    selector: 'app-menu',
+    imports: [
+        RouterLink,
+        RouterLinkActive,
+        MatListModule,
+        MatIconModule,
+        ProfileComponent,
+    ],
+    templateUrl: './menu.component.html',
+    styleUrl: './menu.component.css'
 })
 export class MenuComponent implements OnInit {
   user?: User;

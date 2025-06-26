@@ -15,20 +15,19 @@ import { AuthService } from '../../services/auth.service';
 import { User } from '../../model/User';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
-    FormsModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    RouterLink,
-  ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+    selector: 'app-login',
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatButtonModule,
+        FormsModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        RouterLink,
+    ],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}

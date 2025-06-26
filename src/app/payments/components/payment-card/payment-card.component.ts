@@ -5,11 +5,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { Card } from '../../model/card.entity';
 
 @Component({
-  selector: 'app-payment-card',
-  standalone: true,
-  imports: [MatCardModule, MatIconModule, MatButtonModule],
-  templateUrl: './payment-card.component.html',
-  styleUrl: './payment-card.component.css',
+    selector: 'app-payment-card',
+    imports: [MatCardModule, MatIconModule, MatButtonModule],
+    templateUrl: './payment-card.component.html',
+    styleUrl: './payment-card.component.css'
 })
 export class PaymentCardComponent {
   @Input() card!: Card;
