@@ -3,9 +3,45 @@
     <h1>Reviews</h1>
     <p class="message">Participa con tu puntuación y ayuda a mejorar nuestros servicios.</p>
     <p class="message">Tu opinión es muy importante para nosotros.</p>
-    <button class="mat-raised-button" onclick="window.location.href='https://forms.gle/your-form-id'">
+
+    <button class="mat-raised-button" (click)="location.href = '#'">
       Deja tu review
     </button>
+
+    <div *ngIf="developerMode">
+      <form #reviewForm="ngForm" (ngSubmit)="submitReview()">
+        <div class="form-group">
+          <label for="formUrl">URL del Formulario:</label>
+          <input id="formUrl" name="formUrl" [(ngModel)]="newReview.formUrl" required />
+        </div>
+        <div class="form-group">
+          <label for="userId">ID de Usuario:</label>
+          <input id="userId" name="userId" type="number" [(ngModel)]="newReview.userId" required />
+        </div>
+        <button mat-raised-button color="primary" type="submit" [disabled]="posting">
+          <span *ngIf="!posting">Enviar Review</span>
+          <mat-progress-spinner *ngIf="posting" mode="indeterminate" diameter="20"></mat-progress-spinner>
+        </button>
+      </form>
+
+      <div class="actions">
+        <button mat-stroked-button (click)="loadReviews()" [disabled]="loading">
+          <span *ngIf="!loading">Ver Reviews</span>
+          <mat-progress-spinner *ngIf="loading" mode="indeterminate" diameter="20"></mat-progress-spinner>
+        </button>
+      </div>
+
+      <div *ngIf="showReviews">
+        <h2>Reviews existentes</h2>
+        <div *ngFor="let review of reviews" class="review-card">
+          <p><strong>ID:</strong> {{ review.id }}</p>
+          <p><strong>URL:</strong> <a [href]="review.formUrl" target="_blank">{{ review.formUrl }}</a></p>
+          <p><strong>User ID:</strong> {{ review.userId }}</p>
+          <hr />
+        </div>
+      </div>
+    </div>
+
     <p class="message">Gracias por tu tiempo y apoyo.</p>
   </div>
 </div>
