@@ -1,90 +1,140 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentFormComponent } from '../../components/payment-form/payment-form.component';
+import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { CommonModule } from '@angular/common';
-import { Card } from '../../model/card.entity';
-import { RouterLink } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
-import { CreateEditPaymentDialogComponent } from '../../components/create-edit-payment-dialog/create-edit-payment-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { PaymentMethodsService } from '../../services/payment-methods.service';
-import { DeletePaymentDialogComponent } from '../../components/delete-payment-dialog/delete-payment-dialog.component';
-import { PaymentCardComponent } from '../../components/payment-card/payment-card.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+
+interface Card {
+  id?: number;
+  number?: string;
+  holder: string;
+  year?: number;
+  month?: number;
+  code?: string;
+  profileId?: number;
+  paymentId?: number;
+}
 
 @Component({
-    selector: 'app-payment-page',
-    imports: [
-        CommonModule,
-        MatCardModule,
-        MatButtonModule,
-        MatIcon,
-        PaymentCardComponent,
-        RouterLink,
-    ],
-    templateUrl: './payment-page.component.html',
-    styleUrl: './payment-page.component.css'
+  selector: 'app-payment-page',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    RouterModule
+  ],
+  templateUrl: './payment-page.component.html',
+  styleUrls: ['./payment-page.component.css']
 })
 export class PaymentPageComponent implements OnInit {
   cards: Card[] = [];
-  showForm = false;
-  paymentSuccess: boolean = false;
   user = JSON.parse(window.localStorage.getItem('user') || '{}');
+  cardForm!: FormGroup;
+  selectedCard?: Card;
+  editMode = false;
+  showForm = false;
+
+  private readonly CARD_API = 'https://cardmicro-dhbkhmbmb9hab4bc.canadacentral-01.azurewebsites.net/api/v1/cards';
 
   constructor(
-    public dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private paymentMethodsService: PaymentMethodsService
+    private http: HttpClient,
+    private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit(): void {
-    this.paymentMethodsService
-      .getByUserId(this.user.profileId)
-      .subscribe((cards) => {
-        this.cards = cards;
-      });
-  }
-
-  addEditCard(card?: Card) {
-    const editMode = !!card?.id;
-
-    const dialogRef = this.dialog.open(CreateEditPaymentDialogComponent, {
-      data: editMode ? card : null,
-    });
-
-    dialogRef.afterClosed().subscribe((card) => {
-      if (!card) return;
-
-      if (editMode) {
-        const index = this.cards.findIndex((c) => c.id === card.id);
-        this.cards[index] = card;
-      } else this.cards.push(card);
-
-      const message = editMode
-        ? 'Card updated successfully'
-        : 'Card added successfully';
-
-      this.snackBar.open(message, 'Close', {
-        duration: 2000,
-      });
+  ngOnInit() {
+    this.loadCards();
+    this.cardForm = new FormGroup({
+      cardNumber: new FormControl('', Validators.required),
+      cardHolder: new FormControl('', Validators.required),
+      expirationDate: new FormControl('', Validators.required),
+      cvv: new FormControl('', Validators.required),
     });
   }
 
-  removeCard(card: Card) {
-    if (!card?.id) return;
+  loadCards() {
+    this.http
+      .get<Card[]>(`${this.CARD_API}/get-by-profile-id/${this.user.profileId}`)
+      .subscribe((res) => (this.cards = res));
+  }
 
-    const dialogRef = this.dialog.open(DeletePaymentDialogComponent);
+  openForm(card?: Card) {
+    this.editMode = !!card;
+    this.selectedCard = card;
+    this.showForm = true;
+    if (card) {
+      this.cardForm.setValue({
+        cardHolder: card.holder,
+        cardNumber: card.number,
+        expirationDate: `${card.month}/${card.year}`,
+        cvv: card.code,
+      });
+    } else {
+      this.cardForm.reset();
+    }
+  }
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result !== 'delete') return;
+  closeForm() {
+    this.showForm = false;
+  }
 
-      this.paymentMethodsService.delete(card?.id).subscribe(() => {
-        this.snackBar.open('Card removed successfully', 'Close', {
-          duration: 2000,
+  submitCard() {
+    const form = this.cardForm.value;
+    const [month, year] = form.expirationDate.split('/');
+
+    const newCard: Card = {
+      holder: form.cardHolder,
+      number: form.cardNumber,
+      code: form.cvv,
+      month: parseInt(month),
+      year: parseInt(year),
+      profileId: this.user.profileId,
+      paymentId: 0
+    };
+
+    if (this.editMode && this.selectedCard?.id) {
+      newCard.id = this.selectedCard.id;
+      this.http
+        .put<Card>(`${this.CARD_API}/${this.selectedCard.id}`, newCard)
+        .subscribe((res) => {
+          const idx = this.cards.findIndex((c) => c.id === res.id);
+          this.cards[idx] = res;
+          this.snackBar.open('Card updated', 'Close', { duration: 2000 });
+          this.closeForm();
         });
-        this.cards = this.cards.filter((c) => c !== card);
-      });
+    } else {
+      this.http
+        .post<Card>(this.CARD_API, newCard)
+        .subscribe((res) => {
+          this.cards.push(res);
+          this.snackBar.open('Card added', 'Close', { duration: 2000 });
+          this.closeForm();
+        });
+    }
+  }
+
+  deleteCard(card: Card) {
+    if (!card.id) return;
+    if (!confirm('Are you sure you want to delete this card?')) return;
+
+    this.http.delete(`${this.CARD_API}/${card.id}`).subscribe(() => {
+      this.cards = this.cards.filter((c) => c.id !== card.id);
+      this.snackBar.open('Card deleted', 'Close', { duration: 2000 });
     });
   }
 }
