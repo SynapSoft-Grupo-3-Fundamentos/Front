@@ -1,128 +1,37 @@
-.section-header {
-  margin-bottom: 24px;
+.view-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
 }
-
-.header-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  color: #0d3a5a;
+mat-card {
+  margin-top: 1rem;
 }
-
-.go-back-btn {
+mat-card-content p {
   display: flex;
   align-items: center;
-  gap: 8px;
-  color: #0d3a5a;
-  text-decoration: none;
-  font-weight: 600;
+  gap: 0.5rem;
+}
+mat-progress-spinner {
+  display: block;
+  margin: 2rem auto;
 }
 
-.caregiver-section {
+/* search-page.component.css */
+.view-wrapper {
+  padding: 2rem;
+}
+.controls {
   display: flex;
-  gap: 24px;
-}
-
-.caregiver-section-title {
-  font-size: 28px;
-  color: #0d3a5a;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.caregiver-section-text {
-  font-size: 16px;
-}
-
-.caregiver-preview-card {
-  width: 340px;
-  flex-shrink: 0;
-  align-self: flex-start;
-}
-
-.caregiver-biography-content {
-  margin-bottom: 24px;
-}
-
-.caregiver-content {
-  display: flex;
-  gap: 24px;
-  width: 100%;
-}
-
-.caregiver-content > * {
-  width: 100%;
-}
-
-.caregiver-table-label {
-  font-weight: 600;
-}
-
-.caregiver-workaround-title {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.caregiver-service-cta {
-  margin-top: 24px;
-  display: flex;
-  gap: 12px;
-}
-
-.btn {
-  border-radius: 5px;
-}
-
-.btn-primary {
-  background: #0d3a5a !important;
-}
-.btn-secondary {
-  border-color: #0d3a5a !important;
-  color: #0d3a5a !important;
-}
-
-.caregiver-preview-card {
-  background: #fff;
-}
-
-.caregiver-img {
-  width: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-}
-
-.caregiver-preview-card ::ng-deep .mat-mdc-card-header {
-  padding: 0;
-}
-
-.caregiver-preview-card ::ng-deep .mat-mdc-card-content {
-  padding: 24px;
-}
-
-.caregiver-card-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.caregiver-card-name {
-  font-size: 20px;
-  font-weight: 600;
-  color: #0d3a5a;
-  margin-bottom: 12px;
-}
-
-.caregiver-card-item {
-  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
   align-items: center;
-  gap: 6px;
-  color: #0d3a5a;
+  flex-wrap: wrap;
 }
-
-.caregiver-card-item .mat-icon {
-  color: #da373d;
+.cards {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
-.snackbar-container{
-  background: none; /* Esto elimina el color de fondo por defecto del SnackBar */
-  box-shadow: none;
+mat-card {
+  padding: 1rem;
 }

@@ -1,30 +1,40 @@
-<mat-card appearance="outlined">
-  <mat-card-header>
-    <img
-      mat-card-image
-      class="caregiver-img"
-      [src]="serviceSearch.profileImage"
-      alt="A user"
-    />
-  </mat-card-header>
-  <mat-card-content>
-    <mat-card-title class="caregiver-name">
-      {{ serviceSearch.completeName }}
-    </mat-card-title>
-    <mat-card-subtitle class="caregiver-address">
-      {{ serviceSearch.districtsScope.split(',').join(' - ') }}
-    </mat-card-subtitle>
-    <p class="caregiver-biography">
-      {{ serviceSearch.biography }}
-    </p>
-  </mat-card-content>
-  <mat-card-actions>
-    <button
-      mat-flat-button
-      class="btn-see-more"
-      routerLink="./{{ serviceSearch.id }}"
-    >
-      See more
+<div class="card-management">
+  <h1>Card Management</h1>
+  <form #cardForm="ngForm" (ngSubmit)="updating ? updateCard() : submitCard()" class="card-form">
+    <input name="number" placeholder="Number" required [(ngModel)]="formModel.number" />
+    <input name="holder" placeholder="Holder" required [(ngModel)]="formModel.holder" />
+    <input name="year" type="number" placeholder="Year" required [(ngModel)]="formModel.year" />
+    <input name="month" type="number" placeholder="Month" required [(ngModel)]="formModel.month" />
+    <input name="code" placeholder="Code" required [(ngModel)]="formModel.code" />
+    <input name="profileId" type="number" placeholder="ProfileId" required [(ngModel)]="formModel.profileId" />
+    <input name="paymentId" type="number" placeholder="PaymentId" required [(ngModel)]="formModel.paymentId" />
+    <button mat-raised-button type="submit" [disabled]="posting || updating">
+      <span *ngIf="!posting && !updating">{{ updating ? 'Update' : 'Create' }} Card</span>
+      <mat-progress-spinner *ngIf="posting || updating" mode="indeterminate" diameter="20"></mat-progress-spinner>
     </button>
-  </mat-card-actions>
-</mat-card>
+  </form>
+
+  <div class="actions">
+    <button mat-stroked-button (click)="loadCards()" [disabled]="loadingList">
+      <span *ngIf="!loadingList">Refresh List</span>
+      <mat-progress-spinner *ngIf="loadingList" mode="indeterminate" diameter="20"></mat-progress-spinner>
+    </button>
+  </div>
+
+  <div class="cards-list">
+    <mat-card *ngFor="let card of cards" class="card-item">
+      <mat-card-content>
+        <p>ID: {{ card.id }}</p>
+        <p>Number: {{ card.number }}</p>
+        <p>Holder: {{ card.holder }}</p>
+        <p>Expiry: {{ card.month }}/{{ card.year }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="editCard(card)">Edit</button>
+        <button mat-button color="warn" (click)="deleteCard(card.id)" [disabled]="deletingId===card.id">
+          <span *ngIf="deletingId!==card.id">Delete</span>
+          <mat-progress-spinner *ngIf="deletingId===card.id" mode="indeterminate" diameter="20"></mat-progress-spinner>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>

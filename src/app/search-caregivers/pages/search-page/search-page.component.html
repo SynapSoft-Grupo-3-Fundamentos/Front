@@ -1,41 +1,25 @@
-<h1 class="header-title">Search for caregivers</h1>
+<div class="view-wrapper">
+  <h1>Buscar Cuidadores</h1>
+  <div class="controls">
+    <input placeholder="Distrito" [(ngModel)]="selectedDistrict" />
+    <select [(ngModel)]="orderBy">
+      <option value="">Sin orden</option>
+      <option value="caregiverExperience">Experiencia</option>
+      <option value="completedServices">Servicios completados</option>
+    </select>
+    <button mat-raised-button (click)="loadCaregivers()">
+      <mat-icon>search</mat-icon> Buscar
+      <mat-progress-spinner *ngIf="loading" mode="indeterminate" diameter="20"></mat-progress-spinner>
+    </button>
+  </div>
 
-<div class="header-tools-container">
-  <mat-form-field class="header-select" appearance="outline">
-    <mat-label>Location</mat-label>
-    <mat-select
-      hidden
-      [(ngModel)]="selectedLocation"
-    >
-      <mat-option value="">All</mat-option>
-      <mat-option *ngFor="let location of locationOptions" [value]="location">
-        {{ location }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="header-select" appearance="outline">
-    <mat-label>Sort</mat-label>
-    <mat-select
-      hidden
-      [(ngModel)]="orderByRating"
-    >
-      <mat-option value="">Name</mat-option>
-      <mat-option value="caregiverExperience">More experience</mat-option>
-      <mat-option value="completedServices">Most popular</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <button
-    mat-flat-button
-    class="primary-btn refresh-btn"
-    (click)="onReloadList()"
-  >
-    <mat-icon>search</mat-icon>
-    Search
-  </button>
-</div>
-
-<div class="search-caregivers-list">
-  @for (serviceSearch of searchServiceList; track $index) {
-    <app-caregiver-card [serviceSearch]="serviceSearch"></app-caregiver-card>
-  }
+  <div class="cards">
+    <mat-card *ngFor="let c of caregivers" appearance="outlined">
+      <img mat-card-image [src]="c.profileImage" alt="{{c.completeName}}" />
+      <mat-card-title>{{ c.completeName }}</mat-card-title>
+      <mat-card-subtitle>{{ c.districtsScope }}</mat-card-subtitle>
+      <p>{{ c.biography }}</p>
+      <button mat-flat-button [routerLink]="['/search', c.id]">Ver Detalle</button>
+    </mat-card>
+  </div>
 </div>

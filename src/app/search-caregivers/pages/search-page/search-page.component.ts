@@ -1,78 +1,48 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { MatFormField } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { CaregiverCardComponent } from '../../components/caregiver-card/caregiver-card.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterModule } from '@angular/router';
 
-import { FormsModule } from '@angular/forms';
-import { ServiceSearch } from '../../model/service-search';
-import { ServiceSearchService } from '../../services/service-search.service';
+interface Caregiver {
+  id: number;
+  completeName: string;
+  biography: string;
+  profileImage: string;
+  districtsScope: string;
+}
 
 @Component({
-    selector: 'app-search-page',
-    imports: [
-        CommonModule,
-        MatSelectModule,
-        MatFormField,
-        MatButtonModule,
-        MatIconModule,
-        MatGridListModule,
-        CaregiverCardComponent,
-        FormsModule,
-    ],
-    templateUrl: './search-page.component.html',
-    styleUrl: './search-page.component.css'
+  selector: 'app-search-page',
+  standalone: true,
+  imports: [CommonModule, FormsModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, RouterModule],
+  templateUrl: './search-page.component.html',
+  styleUrls: ['./search-page.component.css']
 })
-export class SearchPageComponent implements OnInit, OnChanges {
-  searchServiceList: ServiceSearch[] = [];
-  filteredSearchServiceList: ServiceSearch[] = [];
-  orderByRating: 'caregiverExperience' | 'completedServices' | ''= '';
-  locationOptions: string[] = [];
-  selectedLocation = '';
+export class SearchPageComponent implements OnInit {
+  caregivers: Caregiver[] = [];
+  loading = false;
+  selectedDistrict = '';
+  orderBy = '';
 
-  constructor(private serviceSearchService: ServiceSearchService) { }
+  private readonly API = 'https://profilemicro-hjhzg0dqhhfrh7hg.canadacentral-01.azurewebsites.net/api/v1/caregiver/search';
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.getCaregiversList();
+    this.loadCaregivers();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-    if (changes['selectedLocation']) {
-      console.log('Location changed to: ', this.selectedLocation);
-      console.log('Location changed to: ', changes);
-    }
-  }
-
-  onReloadList() {
-    this.searchCaregivers(this.selectedLocation, this.orderByRating );
-  }
-
-  getCaregiversList() {
-    this.serviceSearchService.search("","").subscribe((searchResults) => {
-      this.searchServiceList = searchResults;
-
-      this.locationOptions = [
-        ...new Set(
-          searchResults
-            .map(result => result.districtsScope)
-            .join(',')
-            .split(',')
-            .map(district => district.trim())
-        )
-      ];
-
+  loadCaregivers(): void {
+    this.loading = true;
+    const params = `?district=${this.selectedDistrict}&sort=${this.orderBy}`;
+    this.http.get<Caregiver[]>(`${this.API}${params}`).subscribe({
+      next: res => { this.caregivers = res; this.loading = false; },
+      error: () => this.loading = false
     });
   }
-
-
-  searchCaregivers(district: string, sort: string) {
-    this.serviceSearchService.search(district, sort).subscribe((searchResults) => {
-      this.searchServiceList = searchResults;
-    });
-  }
-
 }
