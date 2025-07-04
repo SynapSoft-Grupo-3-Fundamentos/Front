@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
@@ -24,9 +24,16 @@ interface CaregiverDetail {
 @Component({
   selector: 'app-search-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatCardModule, MatIconModule, MatProgressSpinnerModule, MatButtonModule],
-  templateUrl: './search-detail.component.html',
-  styleUrls: ['./search-detail.component.css']
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatCardModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatButtonModule
+  ],
+  templateUrl: './service-detail.component.html',
+  styleUrls: ['./service-detail.component.css']
 })
 export class SearchDetailComponent implements OnInit {
   caregiver: CaregiverDetail | null = null;
@@ -34,18 +41,30 @@ export class SearchDetailComponent implements OnInit {
 
   private readonly API = 'https://profilemicro-hjhzg0dqhhfrh7hg.canadacentral-01.azurewebsites.net/api/v1/caregiver';
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.loadDetail();
-  }
+    const user = JSON.parse(localStorage.getItem('user') ?? '{}');
+    const userId = user?.id;
 
-  loadDetail(): void {
-    const id = this.route.snapshot.params['id'];
+    if (!userId) {
+      console.error('No hay userId disponible');
+      return;
+    }
+
     this.loading = true;
-    this.http.get<CaregiverDetail>(`${this.API}/${id}`).subscribe({
-      next: res => { this.caregiver = res; this.loading = false; },
-      error: () => this.loading = false
+
+    this.http.get<CaregiverDetail[]>(this.API).subscribe({
+      next: (caregivers) => {
+        // Buscar por ID directamente
+        this.caregiver = caregivers.find(c => c.id === userId) ?? null;
+        console.log('Caregiver encontrado:', this.caregiver);
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error al obtener caregiver:', err);
+        this.loading = false;
+      }
     });
-  }
-}
+  }}
+

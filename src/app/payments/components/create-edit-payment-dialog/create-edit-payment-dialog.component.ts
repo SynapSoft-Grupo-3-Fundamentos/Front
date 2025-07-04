@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,
@@ -14,25 +14,27 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { PaymentMethodsService } from '../../services/payment-methods.service';
 import { Card } from '../../model/card.entity';
 
 @Component({
-    selector: 'app-create-edit-payment-dialog',
-    imports: [
-        MatDialogModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        FormsModule,
-    ],
-    templateUrl: './create-edit-payment-dialog.component.html',
-    styleUrl: './create-edit-payment-dialog.component.css'
+  selector: 'app-create-edit-payment-dialog',
+  standalone: true,
+  imports: [
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    FormsModule,
+    MatSnackBarModule
+  ],
+  templateUrl: './create-edit-payment-dialog.component.html',
+  styleUrl: './create-edit-payment-dialog.component.css'
 })
 export class CreateEditPaymentDialogComponent {
   public editMode: boolean;
-
   public user = JSON.parse(window.localStorage.getItem('user') || '{}');
 
   public cardForm = new FormGroup({
@@ -45,6 +47,7 @@ export class CreateEditPaymentDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<CreateEditPaymentDialogComponent>,
     public paymentMethodsService: PaymentMethodsService,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data?: Card
   ) {
     this.editMode = !!data;
@@ -64,8 +67,9 @@ export class CreateEditPaymentDialogComponent {
   }
 
   onAddCard() {
-    var month = this.cardForm.value.expirationDate?.split('/')[0] ?? '';
-    var year = this.cardForm.value.expirationDate?.split('/')[1] ?? '';
+    const exp = this.cardForm.value.expirationDate?.split('/') ?? [];
+    const month = exp[0] ?? '';
+    const year = exp[1] ?? '';
 
     const card: Card = {
       profileId: this.user.profileId,
@@ -76,14 +80,26 @@ export class CreateEditPaymentDialogComponent {
       year: parseInt(year),
     };
 
-    this.paymentMethodsService.create(card).subscribe((card) => {
-      this.dialogRef.close(card);
+    this.paymentMethodsService.create(card).subscribe({
+      next: (res) => {
+        this.snackBar.open('Tarjeta registrada correctamente', 'Cerrar', {
+          duration: 3000
+        });
+        this.dialogRef.close(res);
+      },
+      error: (err) => {
+        console.error('Error al guardar tarjeta:', err);
+        this.snackBar.open('Error al registrar tarjeta', 'Cerrar', {
+          duration: 3000
+        });
+      }
     });
   }
 
   onEditCard() {
-    var month = this.cardForm.value.expirationDate?.split('/')[0] ?? '';
-    var year = this.cardForm.value.expirationDate?.split('/')[1] ?? '';
+    const exp = this.cardForm.value.expirationDate?.split('/') ?? [];
+    const month = exp[0] ?? '';
+    const year = exp[1] ?? '';
 
     const card: Card = {
       profileId: this.user.profileId,
@@ -94,12 +110,30 @@ export class CreateEditPaymentDialogComponent {
       year: parseInt(year),
     };
 
-    this.paymentMethodsService
-      .updateCard(this.data?.id, card)
-      .subscribe((card) => this.dialogRef.close(card));
+    this.paymentMethodsService.updateCard(this.data?.id, card).subscribe({
+      next: (res) => {
+        this.snackBar.open('Tarjeta actualizada correctamente', 'Cerrar', {
+          duration: 3000
+        });
+        this.dialogRef.close(res);
+      },
+      error: (err) => {
+        console.error('Error al actualizar tarjeta:', err);
+        this.snackBar.open('Error al actualizar tarjeta', 'Cerrar', {
+          duration: 3000
+        });
+      }
+    });
   }
 
   onSubmit() {
+    if (this.cardForm.invalid) {
+      this.snackBar.open('Completa todos los campos antes de guardar', 'Cerrar', {
+        duration: 3000
+      });
+      return;
+    }
+
     if (this.editMode) {
       this.onEditCard();
     } else {

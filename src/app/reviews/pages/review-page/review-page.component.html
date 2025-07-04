@@ -4,10 +4,12 @@
     <p class="message">Participa con tu puntuación y ayuda a mejorar nuestros servicios.</p>
     <p class="message">Tu opinión es muy importante para nosotros.</p>
 
-    <button class="mat-raised-button" (click)="location.href = '#'">
+    <!-- Botón funcional -->
+    <button mat-raised-button color="primary" (click)="onLeaveReview()">
       Deja tu review
     </button>
 
+    <!-- Modo desarrollador -->
     <div *ngIf="developerMode">
       <form #reviewForm="ngForm" (ngSubmit)="submitReview()">
         <div class="form-group">

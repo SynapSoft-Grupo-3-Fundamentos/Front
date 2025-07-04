@@ -8,10 +8,10 @@ import { CommonModule } from '@angular/common';
 
 
 @Component({
-    selector: 'app-payment-history',
-    imports: [CommonModule, MatTableModule, RouterLink, MatButtonModule],
-    templateUrl: './payment-history.component.html',
-    styleUrl: './payment-history.component.css'
+  selector: 'app-payment-history',
+  imports: [CommonModule, MatTableModule, RouterLink, MatButtonModule],
+  templateUrl: './payment-history.component.html',
+  styleUrl: './payment-history.component.css'
 })
 export class PaymentHistoryComponent implements OnInit {
   user = JSON.parse(localStorage.getItem('user') || '{}');

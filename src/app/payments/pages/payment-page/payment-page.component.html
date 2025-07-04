@@ -1,60 +1,31 @@
 <div class="payment-methods-container">
   <h1>Your payment methods</h1>
   <p>
-    Manage your cards and preferred payment methods for a seamless experience.
+    In this section, you manage your payment wallet by registering your cards
+    and setting up preferred payment methods for a seamless checkout experience.
   </p>
 
   <div class="action-buttons">
-    <button mat-flat-button color="primary" (click)="openForm()">
-      <mat-icon>add</mat-icon> Add Card
+    <button
+      mat-flat-button
+      color="primary"
+      class="btn btn--add-card"
+      (click)="addEditCard()"
+    >
+      <mat-icon>add</mat-icon> Add a card
+    </button>
+    <button mat-stroked-button class="btn btn--history" routerLink="./history">
+      <mat-icon>history</mat-icon>
+      History
     </button>
   </div>
 
-  <div *ngIf="showForm" class="card-form">
-    <h2>{{ editMode ? 'Edit Card' : 'Add New Card' }}</h2>
-    <form [formGroup]="cardForm" (ngSubmit)="submitCard()">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Card Number</mat-label>
-        <input matInput formControlName="cardNumber" required />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Card Holder</mat-label>
-        <input matInput formControlName="cardHolder" required />
-      </mat-form-field>
-
-      <div class="form-row">
-        <mat-form-field appearance="outline">
-          <mat-label>Expiration Date</mat-label>
-          <input matInput formControlName="expirationDate" required />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>CVV</mat-label>
-          <input matInput formControlName="cvv" required />
-        </mat-form-field>
-      </div>
-
-      <div class="form-actions">
-        <button mat-button type="button" (click)="closeForm()">Cancel</button>
-        <button mat-flat-button color="primary" type="submit">
-          {{ editMode ? 'Update' : 'Add' }} Card
-        </button>
-      </div>
-    </form>
-  </div>
-
   <div class="card-list">
-    <mat-card *ngFor="let card of cards" appearance="outlined">
-      <mat-card-content>
-        <p><strong>Number:</strong> {{ card.number }}</p>
-        <p><strong>Expires:</strong> {{ card.month }}/{{ card.year }}</p>
-        <p><strong>Holder:</strong> {{ card.holder }}</p>
-      </mat-card-content>
-      <mat-card-actions align="end">
-        <button mat-button color="warn" (click)="deleteCard(card)">Delete</button>
-        <button mat-button color="primary" (click)="openForm(card)">Edit</button>
-      </mat-card-actions>
-    </mat-card>
+    <app-payment-card
+      *ngFor="let card of cards"
+      [card]="card"
+      (onDelete)="removeCard(card)"
+      (onEdit)="addEditCard(card)"
+    ></app-payment-card>
   </div>
 </div>

@@ -57,12 +57,29 @@ export class ReviewPageComponent {
     });
   }
 
+  onLeaveReview(): void {
+    const user = JSON.parse(localStorage.getItem('user') ?? '{}');
+    const userId = user?.id;
+
+    this.newReview.formUrl = 'https://forms.gle/7SPrayqcxirUqgZq7';
+    this.newReview.userId = userId;
+
+    this.submitReview();
+    window.open(this.newReview.formUrl, '_blank');
+  }
+
   submitReview(): void {
-    if (!this.newReview.formUrl || !this.newReview.userId) return;
+    const user = JSON.parse(localStorage.getItem('user') ?? '{}');
+    const userId = user?.id;
+
+    if (!this.newReview.formUrl || !userId) return;
+
+    this.newReview.userId = userId;
     this.posting = true;
+
     this.http.post(`${this.API_BASE}/review`, this.newReview).subscribe({
       next: () => {
-        this.snackBar.open('Review enviada correctamente', 'Cerrar', { duration: 3000 });
+        this.snackBar.open('Review registrada correctamente', 'Cerrar', { duration: 3000 });
         this.newReview = { formUrl: '', userId: 0 };
         this.posting = false;
         if (this.showReviews) this.loadReviews();

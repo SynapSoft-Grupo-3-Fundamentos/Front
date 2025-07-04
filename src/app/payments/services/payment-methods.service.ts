@@ -9,7 +9,7 @@ import { catchError, retry } from 'rxjs';
 export class PaymentMethodsService extends BaseService<Card> {
   constructor() {
     super();
-    this.basePath = `${this.basePath}/cards`;
+    this.basePath = 'https://cardmicro-dhbkhmbmb9hab4bc.canadacentral-01.azurewebsites.net/api/v1/cards';
   }
 
   getByUserId(id: string) {
