@@ -13,10 +13,8 @@ export class PaymentMethodsService extends BaseService<Card> {
   }
 
   getByUserId(id: string) {
-    return this.http
-      .get<Card[]>(
-        `${this.basePath}/${id}`
-      )
+    return this.http.get<Card[]>(`${this.basePath}/get-by-profile-id/${id}`)
+
       .pipe(retry(2), catchError(this.handleError));
   }
 
