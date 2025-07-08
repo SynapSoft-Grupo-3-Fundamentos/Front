@@ -33,6 +33,7 @@ export const routes: Routes = [
       { path: 'payment', component: PaymentPageComponent },
       { path: 'payment/history', component: PaymentHistoryComponent },
       { path: 'your-service', component: SearchDetailComponent },
+      { path: 'search-caregiver/:id', component: SearchDetailComponent },
       { path: 'reservations', component: ReservationPageComponent },
       { path: 'review', component: ReviewPageComponent },
       { path: 'support', component: SupportPageComponent },
