@@ -69,7 +69,7 @@ export class CreateEditPaymentDialogComponent {
   onAddCard() {
     const exp = this.cardForm.value.expirationDate?.split('/') ?? [];
     const month = exp[0] ?? '';
-    const year = exp[1] ?? '';
+    const year = exp[1]?.length === 2 ? '20' + exp[1] : exp[1];
 
     const card: Card = {
       profileId: this.user.profileId,
@@ -79,6 +79,7 @@ export class CreateEditPaymentDialogComponent {
       month: parseInt(month),
       year: parseInt(year),
     };
+
 
     this.paymentMethodsService.create(card).subscribe({
       next: (res) => {
